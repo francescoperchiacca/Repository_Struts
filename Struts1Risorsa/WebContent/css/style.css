@@ -1,0 +1,25 @@
+
+body {
+	background-color: #ffffff;
+	font-family: garamond;
+	font-size: 15px;
+	text-align:center;
+    margin:10px auto;
+	}
+	
+	div.centrato{
+	margin:1 auto;
+	text-align:center;
+	}
+	
+
+	.errore{
+	color:red;
+	}
+	
+	.table{
+	bgcolor:lightgray;
+	bordercolor:black;
+	border:1;
+	}
+	
