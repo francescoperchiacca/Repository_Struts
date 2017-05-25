@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+   
+         http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+	<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+ 
+
+
+<!--
+     This is a blank Struts configuration file with an example
+     welcome action/page and other commented sample elements.
+
+     Struts Validator is configured using the factory defaults
+     and is ready-to-use.
+
+     NOTE: If you have a generator tool to create the corresponding Java classes
+     for you, you could include the details in the "form-bean" declarations.
+     Otherwise, you would only define the "form-bean" element itself, with the
+     corresponding "name" and "type" attributes, as shown here.
+-->
+
+
+<struts-config>
+
+<!-- ================================================ Form Bean Definitions -->
+    <form-beans>
+    	  <form-bean 
+			  name="loginForm"
+			  type="it.perchiacca.rubrica.form.LoginForm" />
+			
+		  <form-bean 			  
+			  name="rubricaForm"
+			  type="it.perchiacca.rubrica.form.RubricaForm" />
+			  
+		  <form-bean 			  
+			  name="rubricaNuovoForm"
+			  type="it.perchiacca.rubrica.form.RubricaNuovoForm" />
+  
+          <form-bean 
+				name="utenteForm"
+				type="it.perchiacca.rubrica.form.UtenteForm" />
+		  	
+		  <form-bean 
+				name="utenteNuovoForm"
+				type="it.perchiacca.rubrica.form.UtenteNuovoForm" />
+								
+		  <form-bean 
+			  name="inserisciPersonaForm"
+			  type="it.perchiacca.rubrica.form.InserisciPersonaForm" />
+			
+		
+    </form-beans>
+
+
+<!-- ========================================= Global Exception Definitions -->
+    <global-exceptions>
+        <!-- sample exception handler
+        <exception
+            key="expired.password"
+            type="app.ExpiredPasswordException"
+            path="/changePassword.jsp"/>
+        end sample -->
+    </global-exceptions>
+
+
+<!-- =========================================== Global Forward Definitions -->
+    <global-forwards>
+        <!-- Default forward to "Welcome" action -->
+        <!-- Demonstrates using index.jsp to forward -->
+        
+        <forward
+            name="error"
+            path="/pages/error.jsp"/>
+            
+        <forward
+            name="erroreUtente_nessuna_selezione"
+            path="/pages/utente/utenteErrore.jsp"/>
+        
+        <forward
+            name="erroreRubrica_nessuna_selezione"
+            path="/pages/utente/rubricaErrore.jsp"/>
+            
+        <forward
+            name="listaPersone"
+            path="/listaPersone.do"/>
+        
+        <forward
+            name="utenteListaCustom"
+            path="/utenteListaCustom.do"/>    
+           
+        <forward 
+        	name="success_exit"
+        	path="/pages/login.jsp"></forward>
+            												
+    </global-forwards>
+
+
+<!-- =========================================== Action Mapping Definitions -->
+    <action-mappings>
+    
+			<action path="/login"
+					type="it.perchiacca.rubrica.action.LoginAction"
+					name="loginForm"
+					validate="true"
+					input="/pages/login.jsp"
+					scope="request">
+					<forward name="success"    path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="svuota"     path="/pages/login.jsp"/>
+					<forward name="wrong"      path="/pages/login.jsp"/>
+					<forward name="registrati" path="/pages/utente/utenteRegistrazione.jsp"/>
+					<forward name="success_gestioneUtenti"  path="/pages/utente/gestioneUtenti.jsp"/>
+					<forward name="success_utenteConsole"   path="/pages/utente/utenteConsole.jsp"/>
+			</action>
+			
+			<action path="/registrazione"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteRegistrazioneAction"
+					name="utenteForm"
+					validate="true"
+					input="/pages/utente/utenteRegistrazione.jsp"
+					scope="session">
+					<forward name="success"   path="/pages/utente/utenteRegistrazioneDettaglio.jsp"/>
+					<forward name="svuota"    path="/pages/utente/utenteRegistrazione.jsp"/>
+					<forward name="indietro"  path="/pages/login.jsp"/>
+					<forward name="errore"    path="/pages/error.jsp"></forward>
+			</action>
+
+			<action path="/registrazioneDettaglio"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteRegistrazioneDettaglioAction"
+					name="utenteForm"
+					scope="session">
+					<forward name="success_ok"  path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="indietro"    path="/pages/login.jsp"></forward>
+			</action>
+
+			<action path="/rubricaGestione"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaGestioneAction"
+					name="rubricaForm"
+					scope="session">
+					<forward name="success_cerca"            path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_Carica_Lista"     path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_svuota"           path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_nuovo"            path="/pages/rubrica/rubricaNuovo.jsp"/>
+					<forward name="success_dettaglio"        path="/pages/rubrica/rubricaDettaglio.jsp"/>
+					<forward name="success_modifica"         path="/pages/rubrica/rubricaModifica.jsp"/>
+					<forward name="success_elimina"	         path="/pages/rubrica/rubricaConfermaElimina.jsp"/>
+					<forward name="erroreRubrica_nessuna_selezione" path="/pages/rubrica/rubricaErrore.jsp"/>
+		    		<forward name="success_exit"                  path="/pages/login.jsp"/>
+		    		<forward name="success_dettaglioCredenziali"  path="/pages/utente/utenteCredenzialiDettaglio.jsp"></forward>
+		    		
+			</action>
+			
+			
+			<action path="/rubricaNuovo"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaNuovoAction"
+					name="rubricaNuovoForm"
+					input="/pages/rubrica/rubricaNuovo.jsp"
+				    validate="true"
+					scope="request">
+					<forward name="success_salva"    path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_svuota"   path="/pages/rubrica/rubricaNuovo.jsp"/>
+					<forward name="success_indietro" path="/pages/rubrica/rubricaGestione.jsp"></forward>
+			</action>
+								
+			<action path="/rubricaDettaglio"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaDettaglioAction"
+					name="rubricaForm">
+					<forward name="success_modifica" path="/pages/rubrica/rubricaModifica.jsp"/>
+					<forward name="success_annulla"  path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="indietro"         path="/pages/rubrica/rubricaGestione.jsp"></forward>
+			</action>
+				
+			<action path="/rubricaModifica"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaModificaAction"
+					name="rubricaForm"
+					input="/pages/rubricaModifica.jsp">
+					<forward name="success_salva"      		 path="/pages/rubrica/rubricaConfermaModifica.jsp"/>
+					<forward name="success_ripristina_campi" path="/pages/rubrica/rubricaModifica.jsp"/>
+					<forward name="indietro"                 path="/pages/rubrica/rubricaDettaglio.jsp"></forward>
+					<forward name="error_modifica" 			 path="/pages/error.jsp"/>
+			</action>
+				
+			<action path="/rubricaConfermaElimina"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaConfermaEliminaAction"
+					name="rubricaForm"
+					scope="session">
+					<forward name="success_si"     path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_no"     path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="indietro"       path="/pages/rubrica/rubricaGestione.jsp"/>
+			</action>
+				
+			<action path="/rubricaConfermaModifica"
+					type="it.perchiacca.rubrica.action.rubricaAction.RubricaConfermaModificaAction"
+					name="rubricaForm">
+					<forward name="success_si"     path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_no"     path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="indietro"       path="/pages/rubrica/rubricaModifica.jsp"></forward>
+			</action>
+			
+		
+			<action path="/utenteConsole"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteConsoleAction"
+					name="utenteForm"
+					scope="session">
+					<forward name="success_cerca"            path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="success_svuota"           path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="success_nuovo"            path="/pages/utente/utenteNuovo.jsp"/>
+					<forward name="success_dettaglio"        path="/pages/utente/utenteDettaglio.jsp"/>
+					<forward name="success_modifica"         path="/pages/utente/utenteModifica.jsp"/>
+					<forward name="success_elimina"	         path="/pages/utente/utenteConfermaElimina.jsp"/>
+					<forward name="success_rubrica"          path="/pages/rubrica/rubricaGestione.jsp"></forward>
+					<forward name="success_setta"           path="/pages/utente/utenteConsole.jsp"/>	
+					<forward name="ruolo_mancante"    		path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="erroreUtente_nessuna_selezione"          path="/pages/utente/utenteErrore.jsp"></forward>
+					
+			</action>
+			
+ 			
+		
+			
+			<action path="/utenteNuovo"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteNuovoAction"
+					name="utenteNuovoForm"
+					input="/pages/utente/utenteNuovo.jsp"
+					validate="true"
+					scope="request">
+					<forward name="success_registrati"        path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="success_resetta"           path="/pages/utente/utenteNuovo.jsp"/>
+					<forward name="success_indietro"          path="/pages/utente/utenteConsole.jsp"/>
+			</action>
+		
+			<action path="/utenteDettaglio"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteDettaglioAction"
+					name="utenteForm"
+					scope="session">
+					<forward name="success_modifica" path="/pages/utente/utenteModifica.jsp"/>
+					<forward name="success_annulla"  path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="indietro"         path="/pages/utente/utenteConsole.jsp"/>
+			</action>
+			
+			<action path="/utenteModifica"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteModificaAction"
+					name="utenteForm"
+					scope="session"
+					input="/pages/utente/utenteModifica.jsp"
+					validate="true">
+					<forward name="success_salva"      		 path="/pages/utente/utenteConfermaModifica.jsp"/>
+					<forward name="success_ripristina_campi" path="/pages/utente/utenteModifica.jsp"/>
+					<forward name="indietro"                 path="/pages/utente/utenteConsole.jsp"></forward>
+					<forward name="error_modifica" 			 path="/pages/error.jsp"/>
+			</action>
+			
+			<action path="/utenteConfermaModifica"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteConfermaModificaAction"
+					name="utenteForm"
+					scope="session">
+					<forward name="success_si"      		 path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="success_no" 				 path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="indietro"                 path="/pages/utente/utenteModifica.jsp"></forward>
+					<forward name="error_modifica" 			 path="/pages/error.jsp"/>
+			</action>
+			
+			<action path="/utenteConfermaElimina"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteConfermaEliminaAction"
+					name="utenteForm"
+					scope="session">
+					<forward name="success_si"      		 path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="success_no" 				 path="/pages/utente/utenteConsole.jsp"/>
+					<forward name="indietro"                 path="/pages/utente/utenteConsole.jsp"></forward>
+					<forward name="error_modifica" 			 path="/pages/error.jsp"/>
+			</action>
+			
+			
+			<action path="/utenteCredenzialiDettaglio"
+					type="it.perchiacca.rubrica.action.utenteAction.UtenteCredenzialiDettaglioAction"
+					name="utenteForm"
+					scope="request">
+					<forward name="success_modifica"    path="/pages/utente/utenteCredenzialiModifica.jsp"/>
+					<forward name="success_annulla" 	path="/pages/rubrica/rubricaGestione.jsp"/>
+					<forward name="success_indietro"    path="/pages/rubrica/rubricaGestione.jsp"></forward>
+			</action>
+			
+						
+			
+			<action path="/inserisciPersona"
+					type="it.perchiacca.rubrica.action.InserisciPersonaAction"
+					name="inserisciPersonaForm"
+					validate="true"
+					scope="request"
+					input="/pages/inserisciPersona.jsp">
+					<forward name="success" path="/pages/listaPersone.jsp" />
+			</action>
+			
+			<action path="/listaPersone"
+					type="it.perchiacca.rubrica.action.ListaPersoneAction"
+					name="inserisciPersonaForm">
+					<forward name="success" path="/pages/listaPersone.jsp" />
+			</action>
+					
+		
+					
+    </action-mappings>
+
+
+<!-- ======================================== Message Resources Definitions -->
+    <message-resources parameter="MessageResources"/>
+
+<!-- =============================================== Plug Ins Configuration -->
+
+<!-- ======================================================= Tiles plugin -->
+
+  <!--
+     This plugin initialize Tiles definition factory. This later can takes some
+	 parameters explained here after. The plugin first read parameters from
+	 web.xml, thenoverload them with parameters defined here. All parameters
+	 are optional.
+     The plugin should be declared in each struts-config file.
+       - definitions-config: (optional)
+            Specify configuration file names. There can be several comma
+		    separated file names (default: ?? )
+       - moduleAware: (optional - struts1.1)
+            Specify if the Tiles definition factory is module aware. If true
+            (default), there will be one factory for each Struts module.
+			If false, there will be one common factory for all module. In this
+            later case, it is still needed to declare one plugin per module.
+            The factory will be initialized with parameters found in the first
+            initialized plugin (generally the one associated with the default
+            module).
+			  true : One factory per module. (default)
+			  false : one single shared factory for all modules
+	   - definitions-parser-validate: (optional)
+	        Specify if xml parser should validate the Tiles configuration file.
+			  true : validate. DTD should be specified in file header (default)
+			  false : no validation
+
+	  Paths found in Tiles definitions are relative to the main context.
+
+      To use this plugin, download and add the Tiles jar to your WEB-INF/lib
+      directory then uncomment the plugin definition below.
+
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+
+      <set-property property="definitions-config"
+                       value="/WEB-INF/tiles-defs.xml" />
+      <set-property property="moduleAware" value="true" />
+    </plug-in>
+  -->  
+
+
+  <!-- =================================================== Validator plugin -->
+
+ <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/org/apache/struts/validator/validator-rules.xml,
+               /WEB-INF/validation.xml"/>
+  </plug-in>
+  
+ <plug-in className="it.perchiacca.rubrica.connection.InitResources">
+ </plug-in>
+
+</struts-config>
+
+

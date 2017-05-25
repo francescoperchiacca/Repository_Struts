@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE form-validation PUBLIC
+     "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+     "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+
+<!--
+     This is a minimal Validator form file with a couple of examples.
+-->
+
+    <global>
+
+        <!-- An example global constant
+        <constant>
+            <constant-name>postalCode</constant-name>
+            <constant-value>^\d{5}\d*$</constant-value>
+        </constant>
+        end example-->
+
+    </global>
+
+    <!-- VALIDAZIONE DI RUBRICA -->    
+    <formset>
+        <form name="rubricaNuovoForm">
+        
+        	<field property="nome" 
+        		   depends="required" 
+        		   page="1">
+    				<msg name="required"
+    					 key="errore.campo.obbligatorio" />
+    					<arg position="0" 
+    					     key="Nome" 
+    					     resource="false" /></field>
+    		
+    		<field property="cognome"
+    			   depends="required" 
+    			   page="1">
+    				<msg name="required" 
+    					 key="errore.campo.obbligatorio" />
+    					<arg position="0"
+    						 key="Cognome"
+    						 resource="false" /></field>
+            <!-- 
+            <field
+                property="telefono"
+                depends="required,integer,minlength,maxlength">
+                     <arg key="validator.telefono"/>
+               	<var><var-name>minlength</var-name><var-value>10</var-value></var>
+               	<var><var-name>maxlength</var-name><var-value>13</var-value></var>
+
+	        </field>
+	         -->
+	        
+	      	<field property="email"
+                   depends="required,email"
+                   page="1" >
+                	<arg key="validator.email"
+                		 position="0"/></field>
+	        
+	        <field property="dataNascita" 
+	        	   depends="required,date"
+	        	   page="1" >
+    				<msg name="required" 
+    					 key="errore.campo.obbligatorio" />
+    				<msg name="date" 
+    					 key="errore.campo.formato.errato" />
+    					<arg position="0" key="Data di Nascita" resource="false" />
+    					<arg position="1" key="gg/mm/aaaa" resource="false" />
+    						<var><var-name>datePattern</var-name>
+    							 <var-value>dd/MM/yyyy</var-value></var></field>
+	
+	        <field property="sesso" depends="required" page="1" >
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    				<arg position="0" key="sesso" resource="false" />
+    		</field>
+    		
+    		 <field property="idProfessione" depends="required,intRange" page="1">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    				
+        		<var><var-name>min</var-name><var-value>0</var-value></var>
+        		<var><var-name>max</var-name><var-value>99999</var-value></var>
+    				
+    		</field>
+     
+       </form>
+    </formset>
+    
+    <!-- VALIDAZIONE PERSONA -->
+    <formset>
+       	<form name="inserisciPersonaForm">
+    		
+    		<field property="nome" depends="required">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Nome" resource="false" />
+    		</field>
+    		
+    		<field property="cognome" depends="required">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Cognome" resource="false" />
+    		</field>
+    		
+    		<field property="dataNascita" depends="required,date">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<msg name="date" key="errore.campo.formato.errato" />
+    			<arg position="0" key="Data di Nascita" resource="false" />
+    			<arg position="1" key="gg/mm/aaaa" resource="false" />
+    			<var><var-name>datePattern</var-name><var-value>dd/MM/yyyy</var-value></var>   			
+    		</field>
+    		
+    		<field property="sesso" depends="required">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Sesso" resource="false" />
+    		</field>
+    		
+    		<field property="idProfessione" depends="required,integer">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<msg name="integer" key="errore.campo.formato.errato" />
+    			<arg position="0" key="Professione" resource="false" />
+    			<arg position="1" key="numerico" resource="false" />
+    		</field>
+    		
+    	</form>
+ 	</formset>
+ 
+     
+    <!-- VALIDAZIONE DI UTENTE -->
+    <formset>
+       	<form name="utenteNuovoForm">
+    		
+    		<field property="nome" depends="required" page="1">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Nome" resource="false" />
+    		</field>
+    		
+    		<field property="username" depends="required" page="1">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Username" resource="false" />
+    		</field>
+    		
+    		<field property="password" depends="required" page="1">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<arg position="0" key="Password" resource="false" />
+    		</field>
+    		
+    		<field property="idRuolo" depends="required,integer">
+    			<msg name="required" key="errore.campo.obbligatorio" />
+    			<msg name="integer" key="errore.campo.formato.errato" />
+    			<arg position="0" key="Ruolo" resource="false" />
+    			<arg position="1" key="numerico" resource="false" />
+    		</field>
+    		
+    		
+    		    		
+    	</form>
+    </formset>
+      
+</form-validation>
